@@ -1,0 +1,6 @@
+ docker image build --tag local:SSR_ActivationPromoEast_v1.0.0 . 
+docker save -o SSR_ActivationPromoEast_v1.0.0.tar local:SSR_ActivationPromoEast_v1.0.0 
+
+docker image rm local:SSR_ActivationPromoEast_v1.0.0
+
+$env:GOOS = "linux"
