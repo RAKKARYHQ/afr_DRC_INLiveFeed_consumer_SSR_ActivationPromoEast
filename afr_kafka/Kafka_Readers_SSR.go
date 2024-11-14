@@ -48,11 +48,9 @@ func (c *KafkaClient) RunKafkaReader_SSR_4() {
 				time.Sleep(30 * time.Second)
 				continue
 			}
-			if ssr.SSR.Cos == "340" && ssr.SSR.Cos == "331" {
-				chan_SSR <- kafkaMsg.Value
-				TransactionsCount.With(prometheus.Labels{"Stream": "SSR", "Type": "4", "Description": "Kafka read stream"}).Inc()			
-			}
-			} else {
+			chan_SSR <- kafkaMsg.Value
+			TransactionsCount.With(prometheus.Labels{"Stream": "SSR", "Type": "4", "Description": "Kafka read stream"}).Inc()
+		} else {
 			log.Println("SSR_4 target host is not reachable. Sleep 5 seconds...")
 			time.Sleep(5 * time.Second)
 		}
@@ -69,22 +67,62 @@ func (c *KafkaClient) RunKafkaReader_SSR_26() {
 				time.Sleep(30 * time.Second)
 				continue
 			}
-			var ssr SSR_Message
-			err = xml.Unmarshal(kafkaMsg.Value, &ssr)
-			if err != nil {
-				log.Println("error in PostSSR - Unmarshal body: ", err)
-				return
-			}
-			if ssr.SSR.Cos == "340" && ssr.SSR.Cos == "331" {
-				chan_SSR <- kafkaMsg.Value
-				TransactionsCount.With(prometheus.Labels{"Stream": "SSR", "Type": "26", "Description": "Kafka read stream"}).Inc()
-		
-			}
+			chan_SSR <- kafkaMsg.Value
+			TransactionsCount.With(prometheus.Labels{"Stream": "SSR", "Type": "26", "Description": "Kafka read stream"}).Inc()
 		} else {
 			log.Println("SSR_26 target host is not reachable. Sleep 5 seconds...")
 			time.Sleep(5 * time.Second)
 		}
 	}
 }
+
+// func (c *KafkaClient) RunKafkaReader_SSR_4() {
+// 	log.Println("Starting kafka reader SSR_4")
+// 	for {
+// 		if IsTarget_Up == 1 {
+// 			kafkaMsg, err := c.Reader_SSR_4.ReadMessage(context.Background())
+// 			if err != nil {
+// 				log.Println("error while receiving message from SSR_4: ", err.Error())
+// 				time.Sleep(30 * time.Second)
+// 				continue
+// 			}
+// 			if ssr.SSR.Cos == "340" && ssr.SSR.Cos == "331" {
+// 				chan_SSR <- kafkaMsg.Value
+// 				TransactionsCount.With(prometheus.Labels{"Stream": "SSR", "Type": "4", "Description": "Kafka read stream"}).Inc()			
+// 			}
+// 			} else {
+// 			log.Println("SSR_4 target host is not reachable. Sleep 5 seconds...")
+// 			time.Sleep(5 * time.Second)
+// 		}
+// 	}
+// }
+
+// func (c *KafkaClient) RunKafkaReader_SSR_26() {
+// 	log.Println("Starting kafka reader SSR_26")
+// 	for {
+// 		if IsTarget_Up == 1 {
+// 			kafkaMsg, err := c.Reader_SSR_26.ReadMessage(context.Background())
+// 			if err != nil {
+// 				log.Println("error while receiving message from SSR_26: ", err.Error())
+// 				time.Sleep(30 * time.Second)
+// 				continue
+// 			}
+// 			var ssr SSR_Message
+// 			err = xml.Unmarshal(kafkaMsg.Value, &ssr)
+// 			if err != nil {
+// 				log.Println("error in PostSSR - Unmarshal body: ", err)
+// 				return
+// 			}
+// 			if ssr.SSR.Cos == "340" && ssr.SSR.Cos == "331" {
+// 				chan_SSR <- kafkaMsg.Value
+// 				TransactionsCount.With(prometheus.Labels{"Stream": "SSR", "Type": "26", "Description": "Kafka read stream"}).Inc()
+		
+// 			}
+// 		} else {
+// 			log.Println("SSR_26 target host is not reachable. Sleep 5 seconds...")
+// 			time.Sleep(5 * time.Second)
+// 		}
+// 	}
+// }
 
 

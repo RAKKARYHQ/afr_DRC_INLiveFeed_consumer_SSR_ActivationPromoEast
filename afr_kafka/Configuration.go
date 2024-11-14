@@ -30,10 +30,10 @@ func setDefaultConfiguration() (Configuration ConfigType) {
 	Configuration.KafkaBrokerUrls = "kafka1:9092,kafka2:9092,kafka3:9092"
 	Configuration.KafkaClientId = "SR_ActivatioPromo"
 
-	// http://10.100.11.21:50000/LiveFeedActivationPromo/ActivationEastPromo
+	// http://10.100.11.21:50000/LiveFeedActivationPromo/ActivationPromo
 	Configuration.TargetProtocol = "http"
 	Configuration.TargetIP = "10.100.11.21"
 	Configuration.TargetPort = "50000"
-	Configuration.TargetURI = "/LiveFeedActivationPromo/ActivationEastPromo"
+	Configuration.TargetURI = "/LiveFeedActivationPromo/ActivationPromo"
 	return
 }
